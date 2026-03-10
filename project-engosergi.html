@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>engosergi.web — Proyecto</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #FAFAFA;
+  --surface:  #FFFFFF;
+  --ink:      #111111;
+  --ink-2:    #555555;
+  --ink-3:    #999999;
+  --border:   #E8E8E8;
+  --accent:   #0071E3;
+  --tag-bg:   #F0F0F0;
+}
+
+[data-theme="dark"] {
+  --bg:       #000000;
+  --surface:  #1C1C1E;
+  --ink:      #F5F5F7;
+  --ink-2:    #ADADB8;
+  --ink-3:    #6E6E73;
+  --border:   #2C2C2E;
+  --tag-bg:   #2C2C2E;
+}
+
+html { font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── TOPBAR ────────────────────────────── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250,250,250,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s;
+}
+[data-theme="dark"] .topbar {
+  background: rgba(0,0,0,0.85);
+}
+.topbar-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--accent);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  padding: 0;
+}
+.topbar-back:hover { opacity: 0.7; }
+.topbar-back svg { width: 16px; height: 16px; }
+.topbar-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ink-2);
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+/* ── HERO ──────────────────────────────── */
+.hero {
+  padding: 64px 24px 48px;
+  max-width: 680px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.5s ease forwards;
+}
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--ink-3);
+}
+
+.hero-title {
+  font-size: clamp(32px, 6vw, 48px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+
+.hero-desc {
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--ink-2);
+  line-height: 1.65;
+  margin-bottom: 32px;
+  max-width: 520px;
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 36px;
+}
+.tag {
+  background: var(--tag-bg);
+  color: var(--ink-2);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: 100px;
+}
+
+/* Meta row */
+.meta-row {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+.meta-item {}
+.meta-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 4px;
+}
+.meta-value {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+/* ── VISUAL PREVIEW ─────────────────────── */
+.preview-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 24px 56px;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.5s 0.1s ease forwards;
+}
+
+.browser-mock {
+  background: var(--surface);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+}
+.browser-bar {
+  background: var(--tag-bg);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.browser-dots {
+  display: flex;
+  gap: 5px;
+}
+.browser-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.browser-dot:nth-child(1) { background: #FF5F57; }
+.browser-dot:nth-child(2) { background: #FEBC2E; }
+.browser-dot:nth-child(3) { background: #28C840; }
+.browser-url {
+  flex: 1;
+  background: var(--bg);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 11px;
+  color: var(--ink-2);
+  font-family: 'Inter', monospace;
+  border: 1px solid var(--border);
+}
+.browser-body {
+  padding: 32px 28px;
+  min-height: 200px;
+  /* Simulate the landing page feel */
+  background: var(--bg);
+}
+.sim-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.sim-logo {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--ink-3);
+}
+.sim-toggles {
+  display: flex;
+  gap: 6px;
+}
+.sim-pill {
+  width: 28px; height: 14px;
+  background: var(--tag-bg);
+  border-radius: 100px;
+  border: 1px solid var(--border);
+}
+.sim-hero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.sim-avatar {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+.sim-lines {}
+.sim-line {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border);
+  margin-bottom: 6px;
+}
+.sim-line.title { width: 140px; background: var(--ink-3); opacity: 0.3; }
+.sim-line.sub   { width: 90px; }
+.sim-line.badge { width: 60px; height: 6px; }
+
+/* ── CONTENT ───────────────────────────── */
+.content {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+.block {
+  margin-bottom: 48px;
+  opacity: 0;
+  transform: translateY(12px);
+}
+.block.show {
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.block-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.block-text {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+.block-text p { margin-bottom: 12px; }
+.block-text p:last-child { margin-bottom: 0; }
+
+/* Feature list */
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--ink-2);
+  font-weight: 300;
+}
+.feature-list li::before {
+  content: '→';
+  color: var(--ink-3);
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 12px;
+}
+
+/* Stack grid */
+.stack-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.stack-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.stack-item .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.6;
+}
+
+/* Highlight quote */
+.highlight {
+  border-left: 2px solid var(--accent);
+  padding: 14px 20px;
+  background: var(--surface);
+  border-radius: 0 8px 8px 0;
+  margin: 20px 0;
+}
+.highlight p {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* CTA */
+.cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  border: none;
+  text-decoration: none;
+}
+.btn:hover { opacity: 0.8; transform: scale(1.02); text-decoration: none; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-ghost { background: var(--tag-bg); color: var(--ink); }
+.btn svg { width: 14px; height: 14px; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <button class="topbar-back" onclick="window.history.back()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    Volver
+  </button>
+  <span class="topbar-title">engosergi.me</span>
+  <div style="display:flex;gap:8px;align-items:center">
+    <div style="display:flex;background:var(--tag-bg);border-radius:100px;padding:3px;border:1px solid var(--border)">
+      <button id="btn-light" onclick="setTheme('light')" style="background:var(--surface);border:none;cursor:pointer;padding:5px 11px;border-radius:100px;font-size:13px;line-height:1;font-family:'Inter',sans-serif;transition:all 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.08)">☀️</button>
+      <button id="btn-dark" onclick="setTheme('dark')" style="background:none;border:none;cursor:pointer;padding:5px 11px;border-radius:100px;font-size:13px;line-height:1;font-family:'Inter',sans-serif;transition:all 0.2s">🌙</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Proyecto personal · 2025</div>
+  <h1 class="hero-title">engosergi.web</h1>
+  <p class="hero-desc">
+    Una web personal construida desde cero con HTML, CSS y JavaScript puro — sin frameworks, sin librerías. El reto era conseguir algo que pareciera cuidado y moderno usando solo lo básico.
+  </p>
+
+  <div class="tags">
+    <span class="tag">HTML / CSS / JS</span>
+    <span class="tag">Sin frameworks</span>
+    <span class="tag">Vercel</span>
+    <span class="tag">Diseño propio</span>
+    <span class="tag">Bilingüe</span>
+    <span class="tag">Dark mode</span>
+  </div>
+
+  <div class="meta-row">
+    <div class="meta-item">
+      <div class="meta-label">Estado</div>
+      <div class="meta-value">🟢 En línea</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Plataforma</div>
+      <div class="meta-value">Vercel (gratis)</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Tipo</div>
+      <div class="meta-value">Web personal</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Código</div>
+      <div class="meta-value">1 archivo HTML</div>
+    </div>
+  </div>
+</div>
+
+<!-- BROWSER PREVIEW -->
+<div class="preview-wrap">
+  <div class="browser-mock">
+    <div class="browser-bar">
+      <div class="browser-dots">
+        <div class="browser-dot"></div>
+        <div class="browser-dot"></div>
+        <div class="browser-dot"></div>
+      </div>
+      <div class="browser-url">engosergi.me</div>
+    </div>
+    <div class="browser-body">
+      <div class="sim-topbar">
+        <div class="sim-logo">ENGOSERGI</div>
+        <div class="sim-toggles">
+          <div class="sim-pill"></div>
+          <div class="sim-pill"></div>
+        </div>
+      </div>
+      <div class="sim-hero">
+        <div class="sim-avatar"></div>
+        <div class="sim-lines">
+          <div class="sim-line title"></div>
+          <div class="sim-line sub"></div>
+          <div class="sim-line badge"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT BLOCKS -->
+<div class="content">
+
+  <div class="block" id="b1">
+    <div class="block-label">¿Qué es?</div>
+    <div class="block-text">
+      <p>Mi página personal. Un sitio donde presento quién soy, qué hago y en qué proyectos trabajo — sin ruido, sin distracciones.</p>
+      <p>La idea era simple: algo limpio que se cargue rápido y se vea bien en móvil y en ordenador. Sin instalar nada, sin dependencias, sin complicaciones.</p>
+    </div>
+    <div class="highlight">
+      <p>"Un archivo HTML. Sin npm, sin webpack, sin React. Solo código."</p>
+    </div>
+  </div>
+
+  <div class="block" id="b2">
+    <div class="block-label">Qué tiene</div>
+    <ul class="feature-list">
+      <li>Modo oscuro y claro con toggle — el diseño cambia suavemente</li>
+      <li>Español e inglés — todos los textos cambian al instante</li>
+      <li>Efecto de "IA escribiendo" en la presentación — simula pasos de thinking antes de hacer streaming del texto letra a letra</li>
+      <li>Avatar con imagen real incrustada en base64 — sin archivos externos</li>
+      <li>Proyectos censurados con blur — honesto sobre lo que aún no está listo</li>
+      <li>Chips de skills, contacto directo por Instagram y Gmail</li>
+      <li>Secciones con animación de entrada escalonada al cargar</li>
+    </ul>
+  </div>
+
+  <div class="block" id="b3">
+    <div class="block-label">Stack técnico</div>
+    <div class="stack-grid">
+      <div class="stack-item"><span class="dot"></span>HTML5</div>
+      <div class="stack-item"><span class="dot"></span>CSS3 (variables, grid, animaciones)</div>
+      <div class="stack-item"><span class="dot"></span>JavaScript vanilla</div>
+      <div class="stack-item"><span class="dot"></span>Google Fonts (Inter)</div>
+      <div class="stack-item"><span class="dot"></span>SVG inline (sin CDN)</div>
+      <div class="stack-item"><span class="dot"></span>Vercel (deploy automático)</div>
+      <div class="stack-item"><span class="dot"></span>GitHub (repositorio)</div>
+    </div>
+  </div>
+
+  <div class="block" id="b4">
+    <div class="block-label">Lo más interesante</div>
+    <div class="block-text">
+      <p>El efecto del tagline fue lo más divertido de construir. Antes de escribir el texto final, la página muestra tres mensajes en cursiva gris que simulan que una IA está "pensando" — luego el texto aparece letra a letra como si se estuviera generando en tiempo real.</p>
+      <p>Todo con <code style="font-family:monospace;font-size:13px;background:var(--tag-bg);padding:2px 6px;border-radius:4px">setTimeout</code> encadenado. Sin librerías, sin magia. Más difícil de lo que parece porque los navegadores móviles (Safari en iPhone) cancelaban los timers anidados — hubo que reescribirlo varias veces hasta que funcionó en todos los dispositivos.</p>
+      <p>También los iconos: inicialmente usaba Lucide via CDN, pero el entorno de preview los bloqueaba. Se migraron todos a SVGs inline — más código, pero cero dependencias externas.</p>
+    </div>
+  </div>
+
+  <div class="block" id="b5">
+    <div class="block-label">Construido con</div>
+    <div class="block-text">
+      <p>100% vibe coding con Claude. Los requisitos se describieron en lenguaje natural — diseño, comportamiento, animaciones — y el código se generó, revisó y refinó en conversación.</p>
+      <p>Sin tocar prácticamente nada a mano. Este proyecto en sí mismo es una demostración de lo que se puede construir así.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-row">
+    <a href="https://engosergi-me.vercel.app" target="_blank" class="btn btn-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Ver la web
+    </a>
+    <button class="btn btn-ghost" onclick="window.history.back()">
+      ← Volver a proyectos
+    </button>
+  </div>
+
+</div>
+
+<script>
+  // Theme
+  function setTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    var bl = document.getElementById('btn-light');
+    var bd = document.getElementById('btn-dark');
+    if (!bl || !bd) return;
+    if (t === 'light') {
+      bl.style.background = 'var(--surface)';
+      bl.style.boxShadow  = '0 1px 3px rgba(0,0,0,0.08)';
+      bd.style.background = 'none';
+      bd.style.boxShadow  = 'none';
+    } else {
+      bd.style.background = 'var(--surface)';
+      bd.style.boxShadow  = '0 1px 3px rgba(0,0,0,0.08)';
+      bl.style.background = 'none';
+      bl.style.boxShadow  = 'none';
+    }
+  }
+
+  // Reveal blocks
+  document.addEventListener('DOMContentLoaded', function() {
+    var blocks = document.querySelectorAll('.block');
+    blocks.forEach(function(b, i) {
+      setTimeout(function() { b.classList.add('show'); }, 300 + i * 100);
+    });
+  });
+</script>
+</body>
+</html>
